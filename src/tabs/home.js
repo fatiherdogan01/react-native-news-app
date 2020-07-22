@@ -16,7 +16,7 @@ function Home({ navigation }) {
     useEffect(() => {
         fetchData();
         AsyncStorage.removeItem('savednews')
-    }, [data])
+    }, [])
 
     useEffect(() => {
         AsyncStorage.setItem('savednews', JSON.stringify(savedNews))
