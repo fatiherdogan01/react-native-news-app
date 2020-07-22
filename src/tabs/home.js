@@ -9,7 +9,6 @@ const API_KEY = '142a48b2703b4bfb94498e43fd5fe495'
 function Home({ navigation }) {
     const [data, setData] = useState([])
     const [savedNews, setSavedNews] = useState([])
-    const [fetching, setFetching] = useState(false)
     const [loading, setLoading] = useState(true)
     const myRefs = useRef([]);
 
@@ -29,12 +28,6 @@ function Home({ navigation }) {
                 setData(data)
                 setLoading(false)
             })
-    }
-
-    function onRefresh() {
-        setFetching(true)
-        fetchData()
-            .then(setFetching(false))
     }
 
     async function saveNews(item) {
@@ -80,8 +73,8 @@ function Home({ navigation }) {
                 <FlatList
                     data={data.articles}
                     renderItem={Item}
-                    onRefresh={() => onRefresh()}
-                    refreshing={fetching}
+                    onRefresh={() => fetchData()}
+                    refreshing={loading}
                     keyExtractor={item => item.title}
                 />
             }
