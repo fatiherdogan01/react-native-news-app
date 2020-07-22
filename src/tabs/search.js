@@ -43,8 +43,7 @@ function Search({ navigation }) {
                 <TouchableOpacity style={styles.container} onPress={() => goNewsDetail(item)} >
                     <View style={styles.subContainer} ref={el => myRefs.current[item.publishedAt] = el} >
                         <View style={{ flex: 3 }}>
-                            <Text style={styles.title}>{item.title.split('-')[0]}</Text>
-                            <Text style={styles.source}>{item.title.split('-')[1]}</Text>
+                            <Text style={styles.title}>{item.title}</Text>
                         </View>
                         <Image style={styles.image} source={{ uri: item.urlToImage != null ? item.urlToImage : '' }} />
                     </View>
@@ -122,11 +121,6 @@ const styles = StyleSheet.create({
     },
     title: {
         flex: 3,
-        margin: 10,
-    },
-    source: {
-        color: 'red',
-        fontWeight: '500',
         margin: 10,
     },
     image: {
