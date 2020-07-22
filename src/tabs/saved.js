@@ -7,14 +7,14 @@ function Saved({ navigation }) {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     navigation.addListener('focus', () => {
-        getData()
-        .then(setLoading(false))
+        getData().then(setLoading(false))
+        console.log(data)
     });
 
-    async function getData() {
-        const data = await AsyncStorage.getItem('savednews')
-        let obj = JSON.parse(data) || {};
-        setData(obj)
+   async function getData() {
+            const data = await AsyncStorage.getItem('savednews')
+            let obj = JSON.parse(data) || [];
+            setData(obj)
     }
 
     function goNewsDetail(item) {
@@ -44,7 +44,8 @@ function Saved({ navigation }) {
                 <FlatList
                     data={data}
                     renderItem={Item}
-                    keyExtractor={item => item.title} />
+                    keyExtractor={item => item.title} 
+                />
             }
         </>
     )
