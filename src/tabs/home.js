@@ -61,7 +61,7 @@ function Home({ navigation }) {
                         <Text style={styles.title}>{item.title.split('-')[0]}</Text>
                         <Text style={styles.source}>{item.title.split('-')[1]}</Text>
                     </View>
-                    <Image style={styles.image} source={{ uri: item.urlToImage }} />
+                    <Image style={styles.image} source={{ uri:item.urlToImage!=null ? item.urlToImage : '' }} />
                 </View>
                 <TouchableOpacity style={styles.bookmark} onPress={() => saveNews(item)} >
                     <Ionicons name={savedNews.filter(e => e.publishedAt === item.publishedAt).length > 0 ? 'bookmark' : 'bookmark-outline'} size={25} color='blue' />

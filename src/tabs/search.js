@@ -10,20 +10,25 @@ function Search({ navigation }) {
     const [query, setQuery] = useState('')
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
-    const myRefs = useRef([]);
+    const myRefs = useRef([])
 
-    async function fetchData() {
-        (await fetch(`https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`))
-            .json()
-            .then(res => setData(res))
-            .then(setLoading(false))
+    function fetchData() {
+        fetch(`https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`)
+            //   .json()
+            .then(res => res.json())
+            .then(data => {
+                setData(data)
+                setLoading(false)
+            })
+
+
+        console.log(data.articles)
     }
 
     function searchNews() {
         setLoading(true)
         fetchData()
     }
-
     function goNewsDetail(item) {
         navigation.navigate('NewsDetail', { item: item })
         setTimeout(() => {
@@ -42,7 +47,7 @@ function Search({ navigation }) {
                             <Text style={styles.title}>{item.title.split('-')[0]}</Text>
                             <Text style={styles.source}>{item.title.split('-')[1]}</Text>
                         </View>
-                        <Image style={styles.image} source={{ uri: item.urlToImage }} />
+                        <Image style={styles.image} source={{ uri: item.urlToImage != null ? item.urlToImage : '' }} />
                     </View>
                 </TouchableOpacity>
             </>
@@ -62,12 +67,12 @@ function Search({ navigation }) {
                     {search}
                 </TouchableOpacity>
             </View>
-            {loading ?
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            {loading
+                ? <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <ActivityIndicator size='large' />
-                </View> :
-                <FlatList
-                    data={data && data.articles}
+                </View>
+                : <FlatList
+                    data={data.articles}
                     renderItem={Item}
                     keyExtractor={item => item.title}
                 />
