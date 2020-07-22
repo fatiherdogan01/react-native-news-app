@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
     title: {
         flex: 1,
         margin: 10,
-        fontWeight: '600',
-        fontSize: 22
+        fontWeight: '700',
+        fontSize: 20
     },
     description: {
         flex: 5,
         margin: 10,
-        fontSize: 20
+        fontSize: 18
     },
     image: {
         flex: 2,
