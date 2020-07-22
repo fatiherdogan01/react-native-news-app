@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native"
+import { Text, StyleSheet, Image, ScrollView } from "react-native"
 
 function NewsDetail({ route }) {
     const { item } = route.params;
@@ -8,7 +8,6 @@ function NewsDetail({ route }) {
             <Image style={styles.image} source={{ uri: item.urlToImage }} />
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.description}>{item.description}</Text>
-
         </ScrollView>
     )
 }
@@ -26,13 +25,13 @@ const styles = StyleSheet.create({
     title: {
         flex: 1,
         margin: 10,
-        fontWeight:'600',
-        fontSize:22
+        fontWeight: '600',
+        fontSize: 22
     },
     description: {
         flex: 5,
         margin: 10,
-        fontSize:20
+        fontSize: 20
     },
     image: {
         flex: 2,
