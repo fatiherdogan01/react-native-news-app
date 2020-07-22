@@ -14,7 +14,6 @@ function Search({ navigation }) {
 
     function fetchData() {
         fetch(`https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`)
-            //   .json()
             .then(res => res.json())
             .then(data => {
                 setData(data)
