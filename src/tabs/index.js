@@ -1,28 +1,31 @@
 import React from 'react';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-const Tab = createBottomTabNavigator();
+
 import Home from './home'
 import Search from './search'
 import Saved from './saved'
-export default function Tabs() {
+const Tab = createBottomTabNavigator();
+
+function Tabs() {
   return (
     <Tab.Navigator
-    screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused, color, size }) => {
-        let iconName;
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
 
-        if (route.name === 'Home') {
-          iconName = focused? 'home': 'home-outline';
-        } else if (route.name === 'Search') {
-          iconName = focused ? 'search' : 'search-outline';
-        }
-        else if (route.name === 'Saved') {
-          iconName = focused ? 'bookmark' : 'bookmark-outline';
-        }
-        return <Ionicons name={iconName} size={size} color={color} />;
-      },
-    })}
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Search') {
+            iconName = focused ? 'search' : 'search-outline';
+          }
+          else if (route.name === 'Saved') {
+            iconName = focused ? 'bookmark' : 'bookmark-outline';
+          }
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
       tabBarOptions={{
         showLabel: false,
         labelStyle: {
@@ -37,3 +40,4 @@ export default function Tabs() {
     </Tab.Navigator>
   );
 }
+export default Tabs;

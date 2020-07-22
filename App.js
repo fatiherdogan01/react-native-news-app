@@ -1,19 +1,19 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import SplashScreen from 'react-native-splash-screen'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import Tabs from './src/tabs'
-import NewsDetail from './src/newsDetail'
+import NewsDetail from './src/pages/newsDetail'
 function App() {
-   useEffect(() => {
-     SplashScreen.hide();
+  useEffect(() => {
+    SplashScreen.hide();
   }, [])
   return (
     <NavigationContainer>
       <Stack.Navigator >
-        <Stack.Screen name="Tabs" component={Tabs}  options={{ headerTitleStyle: { alignSelf: 'center' }, headerTitle: 'News Feed' }}      />
-        <Stack.Screen name="NewsDetail" component={NewsDetail} options={{ headerTitle: 'News Detail' }}  />
+        <Stack.Screen name="Tabs" component={Tabs} options={{ headerTitleStyle: { alignSelf: 'center' }, headerTitle: 'News Feed' }} />
+        <Stack.Screen name="NewsDetail" component={NewsDetail} options={{ headerTitle: 'News Detail' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

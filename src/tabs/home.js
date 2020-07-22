@@ -1,29 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
+
 import AsyncStorage from '@react-native-community/async-storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-const API_KEY = '142a48b2703b4bfb94498e43fd5fe495'
-//const API_KEY = 'eabcfcd2c0cc4c54b725cd8dfa6b59c3'
-function Home({ navigation }) {
 
+const API_KEY = '142a48b2703b4bfb94498e43fd5fe495'
+
+function Home({ navigation }) {
     const [data, setData] = useState([])
     const [savedNews, setSavedNews] = useState([])
     const [fetching, setFetching] = useState(false)
     const [loading, setLoading] = useState(true)
     const myRefs = useRef([]);
+
     useEffect(() => {
-        fetchData()
+        fetchData();
         AsyncStorage.removeItem('savednews')
-    }, [])
+    }, [data])
+
     useEffect(() => {
         AsyncStorage.setItem('savednews', JSON.stringify(savedNews))
     }, [savedNews])
+
     async function fetchData() {
         (await fetch(`https://newsapi.org/v2/top-headlines?country=tr&apiKey=${API_KEY}`))
             .json()
             .then(res => setData(res))
             .then(setLoading(false))
     }
+
     function onRefresh() {
         setFetching(true)
         fetchData()
@@ -33,13 +38,12 @@ function Home({ navigation }) {
     async function saveNews(item) {
         const id = item.publishedAt
         if (savedNews.filter(e => e.publishedAt === id).length > 0) {
-
             setSavedNews(savedNews.filter((e) => (e.publishedAt !== id)))
         } else {
             setSavedNews(savedNews => [...savedNews, item])
         }
-
     }
+
     function goNewsDetail(item) {
         navigation.navigate('NewsDetail', { item: item })
         setTimeout(() => {
@@ -48,6 +52,7 @@ function Home({ navigation }) {
             })
         }, 500)
     }
+
     function Item({ item }) {
         return (
             <TouchableOpacity ref={el => myRefs.current[item.publishedAt] = el} style={styles.container} onPress={() => goNewsDetail(item)} >
@@ -58,7 +63,7 @@ function Home({ navigation }) {
                     </View>
                     <Image style={styles.image} source={{ uri: item.urlToImage }} />
                 </View>
-                <TouchableOpacity onPress={() => saveNews(item)} >
+                <TouchableOpacity style={styles.bookmark} onPress={() => saveNews(item)} >
                     <Ionicons name={savedNews.filter(e => e.publishedAt === item.publishedAt).length > 0 ? 'bookmark' : 'bookmark-outline'} size={25} color='blue' />
                 </TouchableOpacity>
             </TouchableOpacity>
@@ -94,11 +99,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     subContainer: {
-
         flexDirection: 'row',
     },
     title: {
         margin: 10,
+    },
+    bookmark: {
+        margin: 10
     },
     source: {
         color: 'red',
