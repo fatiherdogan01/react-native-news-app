@@ -67,7 +67,7 @@ function Search({ navigation }) {
                     <ActivityIndicator size='large' />
                 </View> :
                 <FlatList
-                    data={data.articles}
+                    data={data && data.articles}
                     renderItem={Item}
                     keyExtractor={item => item.title}
                 />
