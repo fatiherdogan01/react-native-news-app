@@ -21,7 +21,7 @@ function Search({ navigation }) {
             })
 
 
-        console.log(data.articles)
+        console.log(data.totalResults)
     }
 
     function searchNews() {
@@ -40,8 +40,8 @@ function Search({ navigation }) {
     function Item({ item }) {
         return (
             <>
-                <TouchableOpacity onPress={() => goNewsDetail(item)} >
-                    <View style={styles.container} ref={el => myRefs.current[item.publishedAt] = el} >
+                <TouchableOpacity style={styles.container} onPress={() => goNewsDetail(item)} >
+                    <View style={styles.subContainer} ref={el => myRefs.current[item.publishedAt] = el} >
                         <View style={{ flex: 3 }}>
                             <Text style={styles.title}>{item.title.split('-')[0]}</Text>
                             <Text style={styles.source}>{item.title.split('-')[1]}</Text>
@@ -70,21 +70,19 @@ function Search({ navigation }) {
                 ? <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <ActivityIndicator size='large' />
                 </View>
-                : <FlatList
-                    data={data.articles}
-                    renderItem={Item}
-                    keyExtractor={item => item.title}
-                />
+                : (data.totalResults > 0
+                    ? <FlatList
+                        data={data.articles}
+                        renderItem={Item}
+                        keyExtractor={item => item.title} />
+                    : <Text style={styles.info}>No News</Text>)
             }
         </>
     )
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: 'row',
         margin: 10,
-        alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: 'white',
         shadowOffset: { width: 0, height: 2 },
@@ -94,11 +92,23 @@ const styles = StyleSheet.create({
         elevation: 5,
         borderRadius: 10,
     },
+    subContainer: {
+        flexDirection: 'row',
+    },
+    info: {
+        marginTop: 100,
+        fontSize: 24,
+        fontWeight: '500',
+        color: 'grey',
+        textAlign: 'center',
+    },
     inputContainer: {
+        backgroundColor: 'white',
         marginTop: 10,
         flexDirection: 'row',
         borderColor: '#ccc',
         padding: Platform.OS === 'ios' ? 10 : 0,
+        paddingHorizontal: 10,
         borderWidth: 1,
         borderRadius: 20,
         marginHorizontal: 30,
